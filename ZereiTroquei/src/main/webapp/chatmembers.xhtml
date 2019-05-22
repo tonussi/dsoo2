@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <body>
+    <ui:composition>
+
+        <p:panel id="userChatMembersTable">
+            <p:autoUpdate />
+            <c:if test="#{userView.loggedIn}">
+                <style type="text/css">
+                    .ui-row-editor .ui-row-editor-pencil {
+                        margin-left:8px;
+                    }
+                </style>
+
+                <h:form>
+                    <p:commandButton icon="fa fa-refresh" action="#{chatMemberView.updateChatMemberList()}"></p:commandButton>
+                </h:form>
+
+                <h:form id="userChatMembersForm">
+
+                    <p:dataTable selectionMode="single"
+                                 selection="#{chatMemberView.selectedContact}"
+                                 rowKey="#{user.id}"
+                                 id="userChatMembersDisplay"
+                                 widgetVar="chatMemberWidget" var="user"
+                                 value="#{chatMemberView.chatMembers}"
+                                 style="margin-bottom:20px">
+
+                        <p:column>
+                            <p:panelGrid columns="2">
+                                <h:outputText style="font-size:12px;" value=" #{user.nome}" styleClass="fa fa-comments"/>
+                                <h:outputText style="font-size:12px;" value=" #{user.email}" styleClass="fa fa-inbox"/>
+                            </p:panelGrid>
+                        </p:column>
+
+                    </p:dataTable>
+
+                    <p:contextMenu for="userChatMembersDisplay" widgetVar="userChatContextMenu">
+                        <p:menuitem value="Conversar" update="userChatMembersDisplay" icon="fa fa-comments"
+                                    actionListener="#{chatMemberView.activeConversation}">
+                            <p:ajax listener="#{conversationView.messages}" update="@all"></p:ajax>
+                        </p:menuitem>
+                    </p:contextMenu>                    
+
+                </h:form>
+            </c:if>
+        </p:panel>
+
+    </ui:composition>
+</body>
+</html>

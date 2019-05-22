@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <h:head>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>ZereiTroquei (ZT)! - Marketplace e Troca de Games!</title>
+        <link type="image/x-icon" href="${facesContext.externalContext.requestContextPath}/resources/images/fav/favicon.ico" rel="shortcut icon" />
+
+    </h:head>
+
+    <h:body>
+
+        <p:layout fullPage="true">
+
+            <p:layoutUnit gutter="1" id="menusHeaderLayout" position="north" header="Painel do Usuário" resizable="false" closable="true" collapsible="true">
+
+                <ui:include src="./usertools.xhtml"></ui:include>
+
+                <ui:include src="./usertrades.xhtml"></ui:include>
+
+            </p:layoutUnit>
+
+            <p:layoutUnit gutter="1" position="west" size="60%" header="Produtos" resizable="false" closable="true" collapsible="true">
+
+                <ui:include src="./userproducts.xhtml"></ui:include>
+
+                <ui:include src="./vitrine.xhtml"></ui:include>
+
+            </p:layoutUnit>
+
+            <p:layoutUnit position="center" size="20%" gutter="1" header="Usuários para conversar">
+
+                <ui:include src="./chatmembers.xhtml"></ui:include>
+
+            </p:layoutUnit>
+
+            <p:layoutUnit gutter="1" position="east" size="20%" header="Conversação" resizable="false" closable="true" collapsible="true" effect="drop">
+
+                <ui:include src="./conversation.xhtml"></ui:include>
+
+            </p:layoutUnit>
+
+        </p:layout>
+
+        <ui:include src="./login.xhtml"></ui:include>
+
+        <ui:include src="./newproduct.xhtml"></ui:include>
+
+        <ui:include src="./newuser.xhtml"></ui:include>
+
+    </h:body>
+
+</html>

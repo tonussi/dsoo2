@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <body>
+    <ui:composition>
+
+        <p:panel>
+            <p:autoUpdate/>
+
+            <c:if test="#{userView.loggedIn}">
+                <p:panel style="margin-top: 5px; height:350px; overflow: scroll">
+                    <p:panelGrid columns="1" id="userActiveConversationPanel">
+                        <c:forEach var="message" items="#{conversationView.messages}">
+                            <p:row>
+                                <c:if test="#{message.fromUser.email ne userView.email}">
+                                    <button style="white-space: nowrap; width: auto; background-color: #ab72d4;"
+                                            class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"
+                                            type="button" role="button" aria-disabled="false">
+                                        #{message.fromUser.nome}
+                                    </button>
+                                </c:if>
+
+                                <c:if test="#{message.toUser.email ne userView.email}">
+                                    <button style="white-space: nowrap; width: auto; background-color: #72d478;"
+                                            class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"
+                                            type="button" role="button" aria-disabled="false">
+                                        #{message.fromUser.nome}
+                                    </button>
+                                </c:if>
+
+                                <p:outputLabel>
+                                    #{message.mensagem}
+                                </p:outputLabel>
+                            </p:row>
+                        </c:forEach>
+                    </p:panelGrid>
+                </p:panel>
+
+                <f:facet name="footer">
+                    <h:panelGrid columns="1">
+                        <p:row>
+                            <h:form id="sendMessageToTargetUserForm">
+                                <h:panelGrid columns="1">
+                                    <p:row>
+                                        <div class="ui-fluid">
+                                            <p:inputTextarea
+                                                counter="display" maxlength="140"
+                                                counterTemplate="{0} caracteres faltando." autoResize="false"
+                                                required="true" value="#{conversationView.userWords}"
+                                                requiredMessage="Escreva algo para poder enviar..."
+                                                validatorMessage="Escreva algo para poder enviar...">
+                                            </p:inputTextarea>
+                                        </div>
+                                        <br />
+                                        <h:outputText id="display" />
+                                    </p:row>
+                                    <p:row>
+                                        <p:commandButton id="sendMessageButton" icon="fa fa-paper-plane-o" action="#{conversationView.submit}"/>
+                                    </p:row>
+                                </h:panelGrid>
+                            </h:form>
+                        </p:row>
+
+                        <p:row>
+                            <h:form>
+                                <p:commandButton style="margin-left: 4px;" icon="fa fa-refresh" action="#{chatMemberView.activeConversation()}"></p:commandButton>
+                            </h:form>
+                        </p:row>
+
+                        <p:row>
+                            <p:outputLabel style="margin-left: 4px;" value="Conversando com... #{conversationView.toUser.nome}"></p:outputLabel>
+                        </p:row>
+                    </h:panelGrid>
+                </f:facet>
+            </c:if>
+        </p:panel>
+
+    </ui:composition>
+</body>
+</html>

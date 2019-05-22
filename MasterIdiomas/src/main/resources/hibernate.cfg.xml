@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost/masteridiomas</property>
+        <property name="hibernate.connection.username">masteridiomas</property>
+        <property name="hibernate.connection.password">masteridiomas</property>
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">false</property>
+        <property name="hibernate.hbm2ddl.auto">create-drop</property>
+        <property name="hibernate.archive.autodetection">class</property>
+        <property name="hibernate.current_session_context_class">thread</property>
+        <!-- mappings for annotated classes -->
+        <mapping class="br.ufsc.model.Pessoa"/>
+        <mapping class="br.ufsc.model.Administrador"/>
+        <mapping class="br.ufsc.model.Professor"/>
+        <mapping class="br.ufsc.model.Estudante"/>
+        <mapping class="br.ufsc.model.Horario"/>
+        <mapping class="br.ufsc.model.Idioma"/>
+        <mapping class="br.ufsc.model.Turma"/>
+        <mapping class="br.ufsc.model.Historico"/>
+    </session-factory>
+</hibernate-configuration>

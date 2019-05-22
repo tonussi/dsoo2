@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <body>
+    <ui:composition>
+
+        <p:dialog
+            width="70%"
+            appendTo="@(body)"
+            modal="true"
+            header="Sugerir trocar por..."
+            widgetVar="offerDialog"
+            id="tradeDialog"
+            showEffect="fade"
+            hideEffect="fade"
+            resizable="false">
+
+            <c:if test="#{userView.loggedIn and productView.userProducts.size() > 0}">
+                <script type="text/javascript">
+                    function handleOfferRequest(xhr, status, args) {
+                        if (args.validationFailed) {
+                            PF(':formVitriniDataGrid:offerDialog').jq.effect("shake", {times: 5}, 100);
+                        } else {
+                            PF(':formVitriniDataGrid:offerDialog').hide();
+                        }
+                    }
+                </script>
+
+                <h:form id="tradeFormSpec">
+                    <p:growl id="msgs" showDetail="true" life="2000"></p:growl>
+
+                    <p:pickList id="tradePojoPickList"
+                                value="#{tradeView.trade}"
+                                var="product"
+                                effect="bounce"
+                                itemValue="#{product.id}"
+                                itemLabel="#{product.id} #{product.nome}"
+                                responsive="true">
+
+                        <f:facet name="sourceCaption">Disponíveis</f:facet>
+                        <f:facet name="targetCaption">Oferta</f:facet>
+
+                        <p:ajax event="transfer" listener="#{tradeView.onTransfer}" update="msgs" />
+                        <p:ajax event="select" listener="#{tradeView.onSelect}" update="msgs"/>
+                        <p:ajax event="unselect" listener="#{tradeView.onUnselect}" update="msgs"/>
+
+                        <p:column style="width:15%">
+                            <h:graphicImage
+                                width="35%" height="35%"
+                                name="images/games/#{product.graphic}"
+                                alt="#{product.nome}" styleClass="ui-product"/>
+                        </p:column>
+
+                        <p:column style="width:85%;">
+                            <h:outputText value="#{product.nome}" />
+                        </p:column>
+                    </p:pickList>
+
+                    <h:panelGrid id="listOfOffers" columns="2">
+                        <h:outputText value="Usuário Querendo Trocar: " style="font-weight:bold" />
+                        <h:outputText value="#{tradeView.source.nome} (cpf: #{tradeView.source.cpf})" style="margin:5px" />
+
+                        <h:outputText value="Outro Usuário: " style="font-weight:bold" />
+                        <h:outputText value="#{tradeView.target.nome} (cpf: #{tradeView.target.cpf})" style="margin:5px" />
+
+                        <h:outputText value="Produto Desejado: " style="font-weight:bold" />
+                        <h:outputText value="#{tradeView.desiredProduct.nome}" style="margin:5px" />
+
+                        <h:outputText value="Target: " style="font-weight:bold" />
+                        <ui:repeat value="#{tradeView.trade.target}" var="p">
+                            <h:outputText value="Produto: [#{p}] (adicionado)" style="margin-top:15px" />
+                            <br/>
+                        </ui:repeat>
+                    </h:panelGrid>
+
+                </h:form>
+
+                <p:commandButton icon="fa fa-cubes" value="Enviar pedido"
+                                 action="#{tradeView.submit}"
+                                 update="tradeFormSpec"
+                                 oncomplete="handleProductRegisterRequest(xhr, status, args)"/>
+            </c:if>
+        </p:dialog>
+    </ui:composition>
+</body>
+</html>

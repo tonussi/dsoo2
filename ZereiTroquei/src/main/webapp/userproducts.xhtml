@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <body>
+    <ui:composition>
+
+        <p:panel id="userProductsTable">
+            <p:autoUpdate />
+            <c:if test="#{userView.loggedIn}">
+                <style type="text/css">
+                    .value {
+                        font-weight: bold;
+                    }
+
+                    .ui-datatable {
+                        margin-bottom: 25px
+                    }
+
+                    .ui-datatable .ui-datatable-footer {
+                        text-align:left;
+                    }
+
+                    .ui-datalist ul {
+                        padding: 0 0 0 10px;
+                        margin: 5px 0;
+                    }
+
+                    .ui-datatable .ui-button-icon-only .ui-button-text {
+                        padding: 0;
+                        line-height: 1.2;
+                    }
+                </style>
+                <h:form id="userProductsForm">
+                    <p:growl id="msgs" showDetail="true" life="2000" />
+                    <p:dataTable selectionMode="single" reflow="true" rows="5"
+                                 paginator="true" selection="#{productView.selectedProduct}"
+                                 rowKey="#{product.id}" id="userProductsDisplay"
+                                 widgetVar="userProductsWidget" var="product"
+                                 value="#{productView.userProducts}">
+
+                        <f:facet name="header">
+                            Tabela de produtos (#{userView.name}, #{userView.email})
+                        </f:facet>
+
+                        <p:column headerText="Id">
+                            <h:outputText value="#{product.id}" />
+                        </p:column>
+
+                        <p:column headerText="Nome">
+                            <h:outputText value="#{product.nome}" />
+                        </p:column>
+
+                        <p:column headerText="Imagem">
+                            <h:outputText value="#{product.graphic}" />
+                        </p:column>                        
+
+                        <p:column headerText="Nome">
+                            <h:outputText value="#{product.preco}">
+                                <f:convertNumber currencyCode="BRL" type="currency" locale="pt_BR"/>
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column headerText="Data Compra">
+                            <h:outputText value="#{product.dataCompra}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column headerText="Console">
+                            <h:outputText value="#{product.console}" />
+                        </p:column>
+
+                        <p:column style="width:32px;text-align: center">
+                            <p:commandButton update="@form:msgs" icon="fa fa-trash" action="#{productView.deleteProduct(product)}"/>
+                        </p:column>
+
+                    </p:dataTable>
+
+                    <p:dialog header="Realmente Remover Produto?" widgetVar="reallyDeleteProduct" appendTo="@(body)" modal="true">
+                        <p:outputPanel id="productDetail" style="text-align:center;">
+                            <p:panelGrid  columns="2" rendered="#{not empty productView.selectedProduct}" columnClasses="label,value">
+                                <h:outputText value="Id:" />
+                                <h:outputText value="#{productView.selectedProduct.id}" />
+                                <h:outputText value="Nome" />
+                                <h:outputText value="#{productView.selectedProduct.nome}" />
+                            </p:panelGrid>
+                        </p:outputPanel>
+                    </p:dialog>
+
+                </h:form>
+            </c:if>
+        </p:panel>
+
+    </ui:composition>
+</body>
+</html>
+

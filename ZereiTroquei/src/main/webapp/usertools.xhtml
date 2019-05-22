@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <body>
+    <ui:composition>
+
+        <h:form>
+            <p:growl id="messages" showDetail="true" life="2000" />
+
+            <p:toolbar id="userPanelMenu">
+                <p:autoUpdate />
+
+                <f:facet name="left">
+                    <c:if test="#{userView.loggedIn}">
+                        <p:commandButton id="newProductButton" value="Add Novo Produto" type="button" icon="fa fa-gamepad" onclick="PF('newProductDialog').show();"/>
+                        <p:commandButton id="checkTradesButton" value="Minhas Trocas" type="button" icon="fa fa-cubes" onclick="PF('userActivatedTradesWidget').show();">
+                            <p:ajax event="click" listener="#{activeTradeView.updateCurrentTrades}" />
+                        </p:commandButton>
+                        <!--<p:commandButton value="Ver Meus itens" oncomplete="PF('tradeForDialog').show()" icon="fa fa-key" update=":everybodyProductsForm:tradeDialog"></p:commandButton>-->
+                        <!--<p:commandButton id="logoutButton" value="Sair do Sistema" type="button" icon="fa fa-sign-out" actionListener="#{userView.logout}"/>-->
+                    </c:if>
+                </f:facet>
+
+                <f:facet name="right">
+                    <c:if test="#{not userView.loggedIn}">
+                        <p:commandButton value="Entrar" type="button" icon="fa fa-sign-in" onclick="PF('loginDialog').show();"/>
+                    </c:if>
+                    <p:commandButton value="Novo Usuário" type="button" icon="fa fa-plus" onclick="PF('newUserDialog').show();"/>
+                </f:facet>
+
+            </p:toolbar>
+        </h:form>
+
+    </ui:composition>
+</body>
+</html>

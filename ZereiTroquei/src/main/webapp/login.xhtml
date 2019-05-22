@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <body>
+    <ui:composition>
+
+        <script type="text/javascript">
+            function handleLoginRequest(xhr, status, args) {
+                if (args.validationFailed || !args.loggedIn) {
+                    PF('loginDialog').jq.effect("shake", {times: 5}, 100);
+                } else {
+                    PF('loginDialog').hide();
+                }
+            }
+        </script>
+
+        <h:form>
+            <p:growl id="msgs" showDetail="true" life="2000" />
+
+            <p:dialog id="userLoginDialog" header="Entrar no Sistema" widgetVar="loginDialog" resizable="false">
+                <h:panelGrid columns="1" cellpadding="5">
+                    <h:outputLabel for="email" value="Email" />
+                    <p:inputText id="email" required="true" label="email" size="40"
+                                 requiredMessage="Por favor entre com seu email."
+                                 validatorMessage="Formato de email inválido"
+                                 value="#{userView.email}">
+                        <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                    </p:inputText>
+                    <p:watermark for="email" value="Seu Email (i.e. exemplo@mail.com.br)" />
+
+                    <h:outputLabel for="password" value="Senha:" />
+                    <p:password id="password" value="#{userView.password}" required="true" label="password" size="40"/>
+                    <p:watermark for="password" value="Sua Senha" />
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Login" update="msgs" action="#{userView.login}"
+                                         oncomplete="handleLoginRequest(xhr, status, args)" />
+                    </f:facet>
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
+
+    </ui:composition>
+</body>
+</html>
+

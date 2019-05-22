@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <body>
+    <ui:composition>
+        <p:panel header="Produtos de outros usuários">
+            <h:form id="everybodyProductsForm">
+                <p:dataGrid columns="2" layout="grid"
+                            rows="4" paginator="true"
+                            id="everybodyProductsDataGrid"
+                            var="product" value="#{productView.allProducts}"
+                            paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                            rowsPerPageTemplate="4,6,12">
+
+                    <p:panel header="Vendido por: #{product.owner.nome} (#{product.owner.email})" style="text-align:center">
+
+                        <h:panelGrid columns="1" style="width:100%">
+
+                            <h:graphicImage width="50%" height="50%" name="images/games/${product.graphic}" />
+
+                            <h:outputText value="#{product.nome}" />
+
+                            <h:outputText value="#{product.descricao}" />
+
+                            <h:outputText value="#{product.dataCompra}" >
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+
+                            <h:outputText value="#{product.preco}">
+                                <f:convertNumber currencyCode="BRL" type="currency" locale="pt_BR"/>
+                            </h:outputText>
+
+                            <c:if test="#{userView.loggedIn}">
+                                <p:commandButton value="Quero Trocar" action="#{productView.setupTrade(product)}"/>
+                            </c:if>
+
+                        </h:panelGrid>
+                    </p:panel>
+                </p:dataGrid>
+
+                <ui:include src="./picklistproducts.xhtml"/>
+
+            </h:form>
+        </p:panel>
+    </ui:composition>
+</body>
+</html>

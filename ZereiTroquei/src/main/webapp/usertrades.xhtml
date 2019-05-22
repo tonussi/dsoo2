@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <body>
+    <ui:composition>
+        <p:dialog header="Trocas Ativas" width="80%" widgetVar="userActivatedTradesWidget" appendTo="@(body)" modal="true">
+            <p:panel id="userTradesTable">
+                <c:if test="#{userView.loggedIn}">
+                    <h:form id="userActiveTradesForm">
+                        <p:autoUpdate/>
+                        <p:growl id="msgs" showDetail="true" life="2000" />
+                        <p:dataTable selectionMode="single" reflow="true" rows="5"
+                                     paginator="true" selection="#{activeTradeView.selectedTrade}"
+                                     rowKey="#{trade.id}" id="userActiveTradesDisplay"
+                                     widgetVar="userTradesWidget" var="trade"
+                                     value="#{activeTradeView.userTrades}">
+
+                            <f:facet name="header">
+                                Trocas Ativadas (#{userView.name}, #{userView.email})
+                            </f:facet>
+
+                            <p:column headerText="Aceitar">
+                                <p:commandButton update="@form:msgs" icon="fa fa-check" action="#{activeTradeView.acceptTrade(trade)}"/>
+                            </p:column>
+
+                            <p:column headerText="Id">
+                                <h:outputText value="#{trade.id}" />
+                            </p:column>
+
+                            <p:column headerText="Usuário pedindo">
+                                <h:outputText value="#{trade.source.nome}" />
+                            </p:column>
+
+                            <p:column headerText="Para">
+                                <h:outputText value="#{trade.target.nome}" />
+                            </p:column>
+
+                            <p:column headerText="Produto desejado">
+                                <h:outputText value="#{trade.desiredProduct.nome}">
+                                    <f:convertNumber currencyCode="BRL" type="currency" locale="pt_BR"/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column headerText="Data Iniciada da troca">
+                                <h:outputText value="#{trade.createDateTime}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column headerText="Lista de ofertas pelo produto">
+                                <ui:repeat value="#{trade.offer}" var="product">
+                                    <h:outputText value="[#{product.id}] #{product.nome}" style="font-weight: bold;" />
+                                    <br/>
+                                </ui:repeat>
+                            </p:column>
+
+                            <p:column style="width:32px;text-align: center">
+                                <p:commandButton update="@form:msgs" icon="fa fa-trash" action="#{activeTradeView.closeTrade(trade)}"/>
+                            </p:column>
+                        </p:dataTable>
+
+                        <p:media id="media_exchange_completed"
+                                 value="sounds/exchange_completed.mp3"
+                                 player="quicktime"
+                                 style="visibility: hidden;">
+                            <f:param name="autoPlay" value="true" />
+                        </p:media>
+                    </h:form>
+                </c:if>
+            </p:panel>
+        </p:dialog>
+
+    </ui:composition>
+</body>
+</html>
+
