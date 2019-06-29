@@ -1,0 +1,11 @@
+package coinhunter;
+
+public enum DogState {
+    FOUND_UNIT_OF_COINS,
+    SEEKING_COINS,
+    SLEEPING_AT_EMPTY_POT,
+    TRAVELLING_BETWEEN_POTS,
+    READY_AND_WAITING,
+    FIXING_POTS,
+    RETURN_TO_MASTER_HUNTER
+}
