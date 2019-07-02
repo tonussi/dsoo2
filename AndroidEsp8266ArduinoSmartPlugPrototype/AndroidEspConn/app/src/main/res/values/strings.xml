@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">ESP8266 Tomada Inteligente</string>
+    <string name="esp_server">192.168.0.240</string>
+    <string name="action_settings">Settings</string>
+    <string name="label1">Tomada D2 / Casa</string>
+    <string name="tip1">Use esse switch abaixo para controlar a tomada da casa</string>
+    <string name="tip2">Buscar servidor ESP 8266 (Beta)</string>
+    <string name="write_esp_server_address">Escreva o enereço IP do Servidor ESP8266</string>
+    <string name="use_this_esp_ip">Usar esse IP para ESP</string>
+    <string name="try_find_esp_server">Tentar encontrar o servidor ESP</string>
+    <string name="tip3">Click para checar se algo se aproximou do portão</string>
+    <string name="check_pir_status">Checar PIR Status</string>
+</resources>

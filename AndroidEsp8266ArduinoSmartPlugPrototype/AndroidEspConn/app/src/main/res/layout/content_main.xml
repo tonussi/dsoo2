@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:showIn="@layout/activity_main"
+        tools:context=".MainActivity" android:orientation="vertical">
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/write_esp_server_address"
+            android:textSize="14sp"/>
+
+    <EditText
+            android:id="@+id/esp_ip_address"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:digits="0123456789."
+            android:inputType="textUri"
+            android:hint="@string/esp_server"/>
+
+    <Button
+            android:text="@string/use_this_esp_ip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/b_use_this_server"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tip1"
+            android:textSize="14sp"/>
+
+    <Switch
+            android:text="@string/label1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tomadaLampadaSala" android:textSize="14sp"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tip2"
+            android:textSize="14sp"/>
+
+    <Button
+            android:text="@string/try_find_esp_server"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/b_try_find_esp_server"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tip3"
+            android:textSize="14sp"/>
+
+    <Button
+            android:text="@string/check_pir_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/b_check_pir_status"/>
+
+</LinearLayout>
